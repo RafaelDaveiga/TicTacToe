@@ -28,10 +28,11 @@ class TicTacToe(QMainWindow):
 
         self.restoreSetting()
 
-        if path.exist(self.pickleFilename):
+        if self.exist(self.pickleFilename):
             pass
+
         else:
-            self.restartGame
+            self.restartGame()
 
     def __str__(self):
         pass
@@ -51,16 +52,16 @@ class TicTacToe(QMainWindow):
             self.logger.debug("Saving Game")
         saveItem = ()
         if self.appSetting.contain('pickleFilename'):
-            with open(path.join(path.dirname(path.realpath(__file__)), self.appSettings.value('pickleFilename', type=str
+            with open(self.join(self.dirname(self.realpath(__file__)), self.appSettings.value('pickleFilename', type=str
                                                                                               )), 'wb') as pickleFile:
-                 return load(pickleFile)
+                return load(pickleFile)
         else:
             self.logger.critical("No pickle Filename")
 
     def restoreGame(self):
         if self.appSettings.conatains('pickleFilename'):
             self.appSettings.value('pickleFilename', type=str)
-            with open(path.join(path.dirname(path.realpath(__file__)), self.appSettings.value('pickleFilename', type=str
+            with open(self.join(self.dirname(self.realpath(__file__)), self.appSettings.value('pickleFilename', type=str
                                                                                               )), 'rb') as pickleFile:
                 return load(pickleFile)
         else:
