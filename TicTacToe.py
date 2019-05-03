@@ -25,11 +25,17 @@ class TicTacToe(QMainWindow):
 
         uic.loadUi("TicTacToe.ui", self)
         self.pickleFilename = pickleFileNameDefault
-        self.playerOne = 'X'
+        self.player = 'X'
         self.computer = 'O'
-        self.playerOneWins = 0
+        self.playerWins = 0
         self.computerWins = 0
         self.draws = 0
+        self.values = (self.player, self.computer)
+        self.buttons = [self.box0, self.bow1, self.box2, self.box3, self.box4, self.box5, self.box6, self.box7,
+                        self.box8]
+        self.Playerwins.setText(str(self.playerWinswins))
+        self.CPUwins.setText(str(self.computerWins))
+        self.Draws.setText(str(self.draws))
         self.box0.clicked.connect(self.clickedHandler(0))
         self.box1.clicked.connect(self.clickedHandler(0))
         self.box2.clicked.connect(self.clickedHandler(0))
@@ -39,6 +45,7 @@ class TicTacToe(QMainWindow):
         self.box6.clicked.connect(self.clickedHandler(0))
         self.box7.clicked.connect(self.clickedHandler(0))
         self.box8.clicked.connect(self.clickedHandler(0))
+
 #        self.restoreSetting()
 
         if self.exist(self.pickleFilename):
@@ -104,9 +111,10 @@ class TicTacToe(QMainWindow):
     def cancelClickedHandler(self):
 
         self.close()
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     testApp = TicTacToe()
     testApp.show()
     sys.exit(app.exec_())
-
