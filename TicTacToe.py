@@ -14,6 +14,7 @@ from pickle import dump, load
 
 logFilenameDefault = 'tictactoe.log'
 pickleFileNameDefault = '.tictactoeSave.pl'
+playe
 
 
 class TicTacToe(QMainWindow):
@@ -30,13 +31,11 @@ class TicTacToe(QMainWindow):
         self.playerWins = 0
         self.computerWins = 0
         self.draws = 0
+        self.used = 0
+        self.corners = [self.box1, self.box3, self.box7, self.box9]
         self.values = (self.player, self.computer)
         self.buttons = [self.box0, self.bow1, self.box2, self.box3, self.box4, self.box5, self.box6, self.box7,
                         self.box8]
-        self.Playerwins.setText(str(self.playerWinswins))
-        self.CPUwins.setText(str(self.computerWins))
-        self.Draws.setText(str(self.draws))
-        self.box0.clicked.connect(self.clickedHandler(0))
         self.box1.clicked.connect(self.clickedHandler(0))
         self.box2.clicked.connect(self.clickedHandler(0))
         self.box3.clicked.connect(self.clickedHandler(0))
@@ -45,6 +44,7 @@ class TicTacToe(QMainWindow):
         self.box6.clicked.connect(self.clickedHandler(0))
         self.box7.clicked.connect(self.clickedHandler(0))
         self.box8.clicked.connect(self.clickedHandler(0))
+        self.box9.clicked.connect(self.clickedHandler(0))
 
 #        self.restoreSetting()
 
@@ -60,14 +60,43 @@ class TicTacToe(QMainWindow):
     def updateUi(self):
         if self.createLogFile:
             self.logger.info()
-        self.set
+        self.Playerwins.setText(str(self.playerWinswins))
+        self.CPUwins.setText(str(self.computerWins))
+        self.Draws.setText(str(self.draws))
 
+    def checkWinner(self):
+
+        if self.box1.text() == self.box2.text() == self.box3.text() and self.box1.text() in self.values:
+            return self.box1, self.box2, self.box3
+
+        elif self.box4.text() == self.box5.text() == self.box6.text() and self.box4.text() in self.values:
+            return self.box4, self.box5, self.box6
+
+        elif self.box7.text() == self.box8.text() == self.box9.text() and self.box7.text() in self.values:
+            return self.box7, self.box8, self.box9
+
+        elif self.box1.text() == self.box4.text() == self.box7.text() and self.box1.text() in self.values:
+            return self.box1, self.box4, self.box7
+
+        elif self.box2.text() == self.box5.text() == self.box8.text() and self.box2.text() in self.values:
+            return self.box2, self.box5, self.box8
+
+        elif self.box3.text() == self.box6.text() == self.box9.text() and self.box3.text() in self.values:
+            return self.box3, self.box6, self.box9
+
+        elif self.box1.text() == self.box5.text() == self.box9.text() and self.box1.text() in self.values:
+            return self.box1, self.box5, self.box9
+
+        elif self.box7.text() == self.box5.text() == self.box3.text() and self.box7.text() in self.values:
+            return self.box7, self.box5, self.box3
+
+        return False
 
     def restartGame(self):
-        if self.createLogFile:
-            self.logger.debug("Game Restarting")
-        self.win = 0
-        self.loss = 0
+        for button in self.buttons:
+            button.setEnabled(True)
+            button.setText("")
+
 
     def saveGame(self):
         if self.createLogFile:
@@ -109,7 +138,6 @@ class TicTacToe(QMainWindow):
         win = ((0, 1, 2), (3, 4, 5), (6, 7, 8), (0, 3, 6), (1, 4, 7), (2, 5, 8), (0, 4, 8), (2, 4, 6))
 
     def cancelClickedHandler(self):
-
         self.close()
 
 
