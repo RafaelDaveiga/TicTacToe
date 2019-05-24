@@ -14,7 +14,7 @@ from pickle import dump, load
 
 logFilenameDefault = 'tictactoe.log'
 pickleFileNameDefault = '.tictactoeSave.pl'
-playe
+playerLetterDefault = 'x'
 
 
 class TicTacToe(QMainWindow):
@@ -57,12 +57,13 @@ class TicTacToe(QMainWindow):
     def __str__(self):
         pass
 
-    def updateUi(self):
-        if self.createLogFile:
-            self.logger.info()
-        self.Playerwins.setText(str(self.playerWinswins))
-        self.CPUwins.setText(str(self.computerWins))
-        self.Draws.setText(str(self.draws))
+    def restartGame(self):
+        for button in self.buttons:
+            button.setText(True)
+            button.setText("")
+        self.used = []
+        self.result = "Another round of TicTacToe!"
+        self.updateUi()
 
     def checkWinner(self):
 
@@ -92,11 +93,12 @@ class TicTacToe(QMainWindow):
 
         return False
 
-    def restartGame(self):
-        for button in self.buttons:
-            button.setEnabled(True)
-            button.setText("")
-
+    def updateUi(self):
+        if self.createLogFile:
+            self.logger.info()
+        self.Playerwins.setText(str(self.playerWinswins))
+        self.CPUwins.setText(str(self.computerWins))
+        self.Draws.setText(str(self.draws))
 
     def saveGame(self):
         if self.createLogFile:
